@@ -192,7 +192,7 @@ streamlit run app/streamlit_app.py
 ![App Screenshot](screenshots/Screenshot (86).png)
 ```
 
----
+----
 
 ## 🧩 Key Design Decisions
 
