@@ -16,10 +16,12 @@ from src.evaluation import (
     create_threshold_table,
     compare_models,
     simulate_retention_strategy,
+    simulate_retention_scenarios,
     save_metrics_json,
     save_threshold_table,
     save_model_comparison,
-    save_retention_table
+    save_retention_table,
+    save_retention_scenarios
 )
 from src.config import (
     TARGET_COLUMN,
@@ -177,6 +179,10 @@ def main():
     print("Creating retention simulation report for logistic regression...")
     retention_df = simulate_retention_strategy(y_test, logistic_prob)
     save_retention_table(retention_df)
+
+    print("Creating retention scenario analysis report...")
+    scenario_df = simulate_retention_scenarios(y_test, logistic_prob)
+    save_retention_scenarios(scenario_df)
 
     print("Saving final metrics...")
     final_metrics = {

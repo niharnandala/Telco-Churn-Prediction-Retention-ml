@@ -19,6 +19,7 @@ PROCESSED_DATA_PATH = os.path.join(BASE_DIR, "data_processed", "final_dataset.pa
 # -----------------------------
 # model paths
 # -----------------------------
+
 MODEL_DIR = os.path.join(BASE_DIR, "models")
 LOGISTIC_MODEL_PATH = os.path.join(MODEL_DIR, "logistic_telco_model.pkl")
 XGB_MODEL_PATH = os.path.join(MODEL_DIR, "xgb_telco_model.pkl")

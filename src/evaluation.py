@@ -201,3 +201,59 @@ def save_retention_table(retention_df, file_name="retention_policy_table.csv"):
 
     output_path = os.path.join(REPORTS_DIR, file_name)
     retention_df.to_csv(output_path, index=False)
+
+
+def simulate_retention_scenarios(
+    y_true,
+    y_prob,
+    thresholds=THRESHOLD_CANDIDATES,
+    retention_cost=RETENTION_COST_PER_CUSTOMER,
+    retained_value=RETAINED_CUSTOMER_VALUE,
+    success_rates=(0.20, 0.35, 0.50)
+):
+    """
+    Simulates retention outcomes under different success-rate scenarios.
+
+    This helps show whether the threshold decision is still sensible
+    under pessimistic, expected, and optimistic assumptions.
+    """
+    rows = []
+
+    for success_rate in success_rates:
+        for threshold in thresholds:
+            y_pred = (y_prob >= threshold).astype(int)
+
+            tn, fp, fn, tp = confusion_matrix(y_true, y_pred).ravel()
+
+            customers_targeted = int(tp + fp)
+            campaign_cost = customers_targeted * retention_cost
+            successful_retentions = tp * success_rate
+            gross_retained_value = successful_retentions * retained_value
+            net_value = gross_retained_value - campaign_cost
+
+            rows.append({
+                "scenario_success_rate": success_rate,
+                "threshold": threshold,
+                "customers_targeted": customers_targeted,
+                "true_positives": int(tp),
+                "false_positives": int(fp),
+                "false_negatives": int(fn),
+                "true_negatives": int(tn),
+                "campaign_cost": round(campaign_cost, 2),
+                "successful_retentions_est": round(successful_retentions, 2),
+                "gross_retained_value": round(gross_retained_value, 2),
+                "net_value": round(net_value, 2)
+            })
+
+    scenario_df = pd.DataFrame(rows)
+    return scenario_df
+
+
+def save_retention_scenarios(scenario_df, file_name="retention_scenarios.csv"):
+    """
+    Saves the scenario analysis table.
+    """
+    make_reports_folder()
+
+    output_path = os.path.join(REPORTS_DIR, file_name)
+    scenario_df.to_csv(output_path, index=False)
