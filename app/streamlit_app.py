@@ -24,115 +24,216 @@ def inject_custom_css():
     st.markdown(
         """
         <style>
-            .block-container {
-                padding-top: 1.5rem;
-                padding-bottom: 2rem;
-                max-width: 1200px;
-            }
+        :root {
+            --text-main: var(--text-color);
+            --text-soft: color-mix(in srgb, var(--text-color) 72%, transparent);
+            --text-muted: color-mix(in srgb, var(--text-color) 55%, transparent);
+            --card-bg: var(--secondary-background-color);
+            --page-bg: var(--background-color);
+            --border-color: color-mix(in srgb, var(--text-color) 14%, transparent);
+            --shadow-color: rgba(0, 0, 0, 0.10);
+            --risk-low: #22c55e;
+            --risk-moderate: #f59e0b;
+            --risk-high: #ef4444;
+        }
 
-            .main-title {
-                font-size: 2.1rem;
-                font-weight: 700;
-                margin-bottom: 0.2rem;
-                line-height: 1.2;
-            }
+        .block-container {
+            padding-top: 1.4rem;
+            padding-bottom: 2rem;
+            max-width: 1200px;
+        }
 
-            .sub-title {
-                font-size: 0.98rem;
-                color: #6b7280;
-                margin-bottom: 1.4rem;
-            }
+        .main-title {
+            font-size: 2.05rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+            line-height: 1.15;
+            color: var(--text-main) !important;
+        }
 
-            .section-title {
-                font-size: 1.15rem;
-                font-weight: 650;
-                margin-top: 0.3rem;
-                margin-bottom: 0.8rem;
-            }
+        .sub-title {
+            font-size: 0.98rem;
+            color: var(--text-soft) !important;
+            margin-bottom: 1.25rem;
+        }
 
-            .summary-card {
-                border: 1px solid #e5e7eb;
-                border-radius: 16px;
-                padding: 1rem 1rem 0.9rem 1rem;
-                background: #ffffff;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.04);
-                min-height: 120px;
-            }
+        .section-title {
+            font-size: 1.12rem;
+            font-weight: 650;
+            margin-top: 0.25rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-main) !important;
+        }
 
-            .summary-label {
-                font-size: 0.84rem;
-                color: #6b7280;
-                margin-bottom: 0.4rem;
-                font-weight: 600;
-                text-transform: uppercase;
-                letter-spacing: 0.03em;
-            }
+        .summary-card {
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1rem 1rem 0.9rem 1rem;
+            background: var(--card-bg);
+            box-shadow: 0 2px 10px var(--shadow-color);
+            min-height: 120px;
+        }
 
-            .summary-value {
-                font-size: 1.7rem;
-                font-weight: 750;
-                line-height: 1.15;
-                margin-bottom: 0.2rem;
-                color: #111827;
-            }
+        .summary-label {
+            font-size: 0.82rem;
+            color: var(--text-soft) !important;
+            margin-bottom: 0.35rem;
+            font-weight: 650;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
 
-            .summary-note {
-                font-size: 0.92rem;
-                color: #4b5563;
-                margin-top: 0.2rem;
-            }
+        .summary-value {
+            font-size: 1.65rem;
+            font-weight: 750;
+            line-height: 1.1;
+            margin-bottom: 0.18rem;
+            color: var(--text-main) !important;
+        }
 
-            .risk-low {
-                color: #15803d;
-            }
+        .summary-note {
+            font-size: 0.9rem;
+            color: var(--text-muted) !important;
+            margin-top: 0.2rem;
+        }
 
-            .risk-moderate {
-                color: #b45309;
-            }
+        .risk-low {
+            color: var(--risk-low) !important;
+        }
 
-            .risk-high {
-                color: #b91c1c;
-            }
+        .risk-moderate {
+            color: var(--risk-moderate) !important;
+        }
 
-            .action-box {
-                border-left: 5px solid #111827;
-                background: #f9fafb;
-                padding: 0.95rem 1rem;
-                border-radius: 12px;
-                margin-top: 0.3rem;
-                margin-bottom: 0.8rem;
-            }
+        .risk-high {
+            color: var(--risk-high) !important;
+        }
 
-            .action-title {
-                font-size: 0.92rem;
-                font-weight: 700;
-                margin-bottom: 0.25rem;
-                color: #111827;
-                text-transform: uppercase;
-                letter-spacing: 0.02em;
-            }
+        .action-box {
+            border-left: 5px solid var(--text-main);
+            background: var(--card-bg);
+            padding: 0.95rem 1rem;
+            border-radius: 12px;
+            margin-top: 0.25rem;
+            margin-bottom: 0.75rem;
+            border-top: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
 
-            .action-text {
-                font-size: 1rem;
-                color: #1f2937;
-                line-height: 1.45;
-            }
+        .action-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 0.22rem;
+            color: var(--text-main) !important;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
 
-            div[data-testid="stExpander"] {
-                margin-top: 0.45rem;
-            }
+        .action-text {
+            font-size: 1rem;
+            color: var(--text-main) !important;
+            line-height: 1.45;
+        }
 
-            div[data-testid="stForm"] {
-                border: 1px solid #e5e7eb;
-                border-radius: 18px;
-                padding: 1rem 1rem 0.2rem 1rem;
-                background: #ffffff;
-            }
+        div[data-testid="stForm"] {
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 1rem 1rem 0.25rem 1rem;
+            background: var(--card-bg) !important;
+        }
+
+        /* labels */
+        label,
+        .stSelectbox label,
+        .stNumberInput label,
+        .stTextInput label,
+        .stTextArea label {
+            color: var(--text-main) !important;
+            font-weight: 600 !important;
+        }
+
+        /* native inputs */
+        input,
+        textarea,
+        select {
+            color: var(--text-main) !important;
+            background: var(--card-bg) !important;
+        }
+
+        /* baseweb select control */
+        div[data-baseweb="select"] > div {
+            color: var(--text-main) !important;
+            background: var(--card-bg) !important;
+            border-color: var(--border-color) !important;
+        }
+
+        /* selected value in dropdown */
+        div[data-baseweb="select"] span {
+            color: var(--text-main) !important;
+        }
+
+        /* dropdown menu */
+        ul[role="listbox"] {
+            background: var(--card-bg) !important;
+            border: 1px solid var(--border-color) !important;
+        }
+
+        ul[role="listbox"] li {
+            color: var(--text-main) !important;
+            background: var(--card-bg) !important;
+        }
+
+        ul[role="listbox"] li:hover {
+            background: color-mix(in srgb, var(--text-color) 10%, var(--card-bg)) !important;
+        }
+
+        /* number input wrapper */
+        div[data-baseweb="input"] > div {
+            background: var(--card-bg) !important;
+            border-color: var(--border-color) !important;
+        }
+
+        div[data-baseweb="input"] input {
+            color: var(--text-main) !important;
+            -webkit-text-fill-color: var(--text-main) !important;
+        }
+
+        ::placeholder {
+            color: var(--text-muted) !important;
+        }
+
+        thead tr th {
+            color: var(--text-main) !important;
+            font-weight: 700 !important;
+            background-color: var(--card-bg) !important;
+        }
+
+        tbody tr td {
+            color: var(--text-main) !important;
+            background-color: transparent !important;
+        }
+
+        .stDataFrame div {
+            color: var(--text-main) !important;
+        }
+
+        div[data-testid="stExpander"] {
+            margin-top: 0.45rem;
+            color: var(--text-main) !important;
+        }
+
+        div[data-testid="stExpander"] details {
+            background: transparent !important;
+        }
+
+        div[data-testid="stExpander"] summary {
+            color: var(--text-main) !important;
+        }
         </style>
         """,
         unsafe_allow_html=True
     )
-
 
 def get_recommendation(risk, prediction):
     if prediction == 1 and risk == "High Risk":
