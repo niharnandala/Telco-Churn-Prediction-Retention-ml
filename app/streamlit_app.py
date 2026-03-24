@@ -17,11 +17,121 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("📉 Telco Customer Churn Prediction")
-st.caption("Predict churn risk using the selected final model")
-
-
 FINAL_MODEL_NAME = "Logistic Regression"
+
+
+def inject_custom_css():
+    st.markdown(
+        """
+        <style>
+            .block-container {
+                padding-top: 1.5rem;
+                padding-bottom: 2rem;
+                max-width: 1200px;
+            }
+
+            .main-title {
+                font-size: 2.1rem;
+                font-weight: 700;
+                margin-bottom: 0.2rem;
+                line-height: 1.2;
+            }
+
+            .sub-title {
+                font-size: 0.98rem;
+                color: #6b7280;
+                margin-bottom: 1.4rem;
+            }
+
+            .section-title {
+                font-size: 1.15rem;
+                font-weight: 650;
+                margin-top: 0.3rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .summary-card {
+                border: 1px solid #e5e7eb;
+                border-radius: 16px;
+                padding: 1rem 1rem 0.9rem 1rem;
+                background: #ffffff;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+                min-height: 120px;
+            }
+
+            .summary-label {
+                font-size: 0.84rem;
+                color: #6b7280;
+                margin-bottom: 0.4rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.03em;
+            }
+
+            .summary-value {
+                font-size: 1.7rem;
+                font-weight: 750;
+                line-height: 1.15;
+                margin-bottom: 0.2rem;
+                color: #111827;
+            }
+
+            .summary-note {
+                font-size: 0.92rem;
+                color: #4b5563;
+                margin-top: 0.2rem;
+            }
+
+            .risk-low {
+                color: #15803d;
+            }
+
+            .risk-moderate {
+                color: #b45309;
+            }
+
+            .risk-high {
+                color: #b91c1c;
+            }
+
+            .action-box {
+                border-left: 5px solid #111827;
+                background: #f9fafb;
+                padding: 0.95rem 1rem;
+                border-radius: 12px;
+                margin-top: 0.3rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .action-title {
+                font-size: 0.92rem;
+                font-weight: 700;
+                margin-bottom: 0.25rem;
+                color: #111827;
+                text-transform: uppercase;
+                letter-spacing: 0.02em;
+            }
+
+            .action-text {
+                font-size: 1rem;
+                color: #1f2937;
+                line-height: 1.45;
+            }
+
+            div[data-testid="stExpander"] {
+                margin-top: 0.45rem;
+            }
+
+            div[data-testid="stForm"] {
+                border: 1px solid #e5e7eb;
+                border-radius: 18px;
+                padding: 1rem 1rem 0.2rem 1rem;
+                background: #ffffff;
+            }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
 
 
 def get_recommendation(risk, prediction):
@@ -32,12 +142,12 @@ def get_recommendation(risk, prediction):
     return "No immediate action needed."
 
 
-def risk_color(risk):
+def risk_class_name(risk):
     if risk == "High Risk":
-        return "red"
+        return "risk-high"
     elif risk == "Moderate Risk":
-        return "orange"
-    return "green"
+        return "risk-moderate"
+    return "risk-low"
 
 
 def load_threshold_report():
@@ -87,6 +197,27 @@ def validate_inputs(tenure, monthly, total):
     return warnings
 
 
+def render_summary_card(label, value, note="", value_class=""):
+    st.markdown(
+        f"""
+        <div class="summary-card">
+            <div class="summary-label">{label}</div>
+            <div class="summary-value {value_class}">{value}</div>
+            <div class="summary-note">{note}</div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+
+inject_custom_css()
+
+st.markdown('<div class="main-title">📉 Telco Customer Churn Prediction</div>', unsafe_allow_html=True)
+st.markdown(
+    '<div class="sub-title">Predict churn risk using the final selected model and review supporting decision reports.</div>',
+    unsafe_allow_html=True
+)
+
 threshold_report = load_threshold_report()
 model_comparison_df = load_model_comparison()
 retention_scenarios_df = load_retention_scenarios()
@@ -97,7 +228,6 @@ if threshold_report is not None and not threshold_report.empty:
     if "f1_score" in threshold_report.columns:
         best_row = threshold_report.sort_values(by="f1_score", ascending=False).iloc[0]
         suggested_threshold = float(best_row["threshold"])
-
 
 st.sidebar.header("Prediction Settings")
 st.sidebar.write(f"**Final model:** {FINAL_MODEL_NAME}")
@@ -112,9 +242,8 @@ selected_threshold = st.sidebar.slider(
 
 st.sidebar.info(f"Suggested threshold from report: {suggested_threshold:.2f}")
 
-
 with st.form("input_form"):
-    st.subheader("Customer Profile")
+    st.markdown('<div class="section-title">Customer Profile</div>', unsafe_allow_html=True)
 
     col1, col2, col3 = st.columns(3)
 
@@ -154,7 +283,6 @@ with st.form("input_form"):
 
     submit = st.form_submit_button("Predict")
 
-
 if submit:
     input_warnings = validate_inputs(tenure, monthly, total)
 
@@ -188,20 +316,42 @@ if submit:
         threshold=selected_threshold
     )
 
-    st.divider()
-    st.subheader("Prediction")
+    st.markdown('<div class="section-title">Prediction Summary</div>', unsafe_allow_html=True)
 
-    col1, col2, col3 = st.columns(3)
+    c1, c2, c3 = st.columns(3)
 
-    col1.metric("Probability", f"{result['probability']:.2%}")
-    col2.metric("Prediction", result["label"])
-    col3.markdown(
-        f"**Risk Level:** <span style='color:{risk_color(result['risk_segment'])}'>{result['risk_segment']}</span>",
-        unsafe_allow_html=True
-    )
+    with c1:
+        render_summary_card(
+            label="Probability",
+            value=f"{result['probability']:.2%}",
+            note="Estimated churn likelihood based on the selected model."
+        )
+
+    with c2:
+        render_summary_card(
+            label="Prediction",
+            value=result["label"],
+            note=f"Decision based on threshold = {result['threshold']:.2f}"
+        )
+
+    with c3:
+        render_summary_card(
+            label="Risk Level",
+            value=result["risk_segment"],
+            note="Risk label updates with the selected threshold.",
+            value_class=risk_class_name(result["risk_segment"])
+        )
 
     st.markdown("### Suggested next step")
-    st.write(get_recommendation(result["risk_segment"], result["prediction"]))
+    st.markdown(
+        f"""
+        <div class="action-box">
+            <div class="action-title">Suggested next step</div>
+            <div class="action-text">{get_recommendation(result["risk_segment"], result["prediction"])}</div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
     with st.expander("Why this prediction?"):
         explanation = result.get("explanation")

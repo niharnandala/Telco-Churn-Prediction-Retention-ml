@@ -8,30 +8,37 @@ from src.features import add_features
 
 
 def load_model():
+    """
+    Loads the saved final model and related artifacts.
+    """
     saved_obj = joblib.load(LOGISTIC_MODEL_PATH)
     model = saved_obj["model"]
     monthly_charge_median = saved_obj["monthly_charge_median"]
+
     return model, monthly_charge_median
 
 
-def predict_single(input_dict: dict, threshold=DEFAULT_THRESHOLD):
-    model, monthly_charge_median = load_model()
+def get_risk_level(probability, threshold):
+    """
+    Creates a threshold-aware risk label.
 
-    df = pd.DataFrame([input_dict])
-    df = add_features(df, monthly_charge_median=monthly_charge_median)
+    This keeps the risk level aligned with the decision threshold
+    chosen by the user in the app.
+    """
+    low_cutoff = threshold * 0.5
 
-    probability = model.predict_proba(df)[:, 1][0]
-    prediction = int(probability >= threshold)
-    label = "Churn" if prediction == 1 else "No Churn"
-
-    if probability < 0.30:
-        risk_segment = "Low Risk"
-    elif probability < 0.60:
-        risk_segment = "Moderate Risk"
+    if probability < low_cutoff:
+        return "Low Risk"
+    elif probability < threshold:
+        return "Moderate Risk"
     else:
-        risk_segment = "High Risk"
+        return "High Risk"
 
-    explanation = None
+
+def get_logistic_explanation(model, df):
+    """
+    Creates a simple local explanation using logistic regression coefficients.
+    """
     preprocessor = model.named_steps["preprocessor"]
     classifier = model.named_steps["model"]
 
@@ -68,8 +75,27 @@ def predict_single(input_dict: dict, threshold=DEFAULT_THRESHOLD):
         "top_negative": top_negative.to_dict(orient="records")
     }
 
+    return explanation
+
+
+def predict_single(input_dict: dict, threshold=DEFAULT_THRESHOLD):
+    """
+    Takes one customer input and returns prediction details.
+    """
+    model, monthly_charge_median = load_model()
+
+    df = pd.DataFrame([input_dict])
+    df = add_features(df, monthly_charge_median=monthly_charge_median)
+
+    probability = float(model.predict_proba(df)[:, 1][0])
+    prediction = int(probability >= threshold)
+    label = "Churn" if prediction == 1 else "No Churn"
+
+    risk_segment = get_risk_level(probability, threshold)
+    explanation = get_logistic_explanation(model, df)
+
     return {
-        "probability": round(float(probability), 4),
+        "probability": round(probability, 4),
         "prediction": prediction,
         "label": label,
         "risk_segment": risk_segment,
