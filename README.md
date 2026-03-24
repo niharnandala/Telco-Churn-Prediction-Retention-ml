@@ -189,7 +189,7 @@ streamlit run app/streamlit_app.py
 > Replace this with your actual app screenshot
 
 ```
-![App Screenshot](assets/demo.png)
+![App Screenshot](screenshots/Screenshot (86).png)
 ```
 
 ---
