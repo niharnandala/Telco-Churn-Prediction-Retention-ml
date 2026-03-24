@@ -26,16 +26,16 @@ FINAL_MODEL_NAME = "Logistic Regression"
 
 def get_recommendation(risk, prediction):
     if prediction == 1 and risk == "High Risk":
-        return "Customer shows high churn risk. Retention action should be considered."
-    elif prediction == 1 and risk == "Medium Risk":
-        return "Customer shows moderate churn risk. Targeted engagement or a smaller retention incentive may help."
-    return "Customer looks relatively stable. No immediate retention action is needed."
+        return "Prioritize this customer for retention review."
+    elif prediction == 1 and risk == "Moderate Risk":
+        return "Monitor this customer and consider light-touch engagement."
+    return "No immediate action needed."
 
 
 def risk_color(risk):
     if risk == "High Risk":
         return "red"
-    elif risk == "Medium Risk":
+    elif risk == "Moderate Risk":
         return "orange"
     return "green"
 
@@ -69,9 +69,6 @@ def load_retention_scenarios():
 
 
 def validate_inputs(tenure, monthly, total):
-    """
-    Basic sanity checks for input consistency.
-    """
     warnings = []
 
     expected_upper = monthly * max(tenure, 1) * 1.5
@@ -88,30 +85,6 @@ def validate_inputs(tenure, monthly, total):
             )
 
     return warnings
-
-
-def estimate_customer_impact(prediction, risk_segment):
-    """
-    Very simple customer-level action framing.
-    """
-    if prediction == 1 and risk_segment == "High Risk":
-        return {
-            "action_cost": 500,
-            "potential_value_saved": 5000,
-            "message": "High-priority retention candidate."
-        }
-    elif prediction == 1:
-        return {
-            "action_cost": 500,
-            "potential_value_saved": 5000,
-            "message": "Possible retention candidate."
-        }
-    else:
-        return {
-            "action_cost": 0,
-            "potential_value_saved": 0,
-            "message": "No immediate retention spend suggested."
-        }
 
 
 threshold_report = load_threshold_report()
@@ -212,33 +185,23 @@ if submit:
 
     result = predict_single(
         input_dict=data,
-        model_name=FINAL_MODEL_NAME,
         threshold=selected_threshold
     )
 
     st.divider()
     st.subheader("Prediction")
 
-    col1, col2, col3, col4 = st.columns(4)
+    col1, col2, col3 = st.columns(3)
 
     col1.metric("Probability", f"{result['probability']:.2%}")
     col2.metric("Prediction", result["label"])
-    col3.metric("Confidence", result["confidence"])
-    col4.markdown(
-        f"**Risk:** <span style='color:{risk_color(result['risk_segment'])}'>{result['risk_segment']}</span>",
+    col3.markdown(
+        f"**Risk Level:** <span style='color:{risk_color(result['risk_segment'])}'>{result['risk_segment']}</span>",
         unsafe_allow_html=True
     )
 
-    st.markdown("### Recommendation")
+    st.markdown("### Suggested next step")
     st.write(get_recommendation(result["risk_segment"], result["prediction"]))
-
-    impact = estimate_customer_impact(result["prediction"], result["risk_segment"])
-
-    st.markdown("### Estimated customer-level impact")
-    impact_col1, impact_col2, impact_col3 = st.columns(3)
-    impact_col1.metric("Suggested Action Cost", f"{impact['action_cost']}")
-    impact_col2.metric("Potential Value Saved", f"{impact['potential_value_saved']}")
-    impact_col3.metric("Action View", impact["message"])
 
     with st.expander("Why this prediction?"):
         explanation = result.get("explanation")
@@ -289,11 +252,10 @@ if submit:
         st.write(f"**Model used:** {FINAL_MODEL_NAME}")
         st.write(
             "This app uses Logistic Regression as the final decision model. "
-            "Alternative models were evaluated during development, but only the selected model output is shown here for consistency."
+            "It provides decision support by estimating churn risk and suggesting who may need review."
         )
         st.write(
-            "Logistic Regression was kept as the final model because it offers stable performance, "
-            "clear interpretability, and cleaner deployment behavior."
+            "Alternative models were evaluated during development, but only the selected model output is shown here for consistency."
         )
         st.write(f"**Decision threshold:** {result['threshold']:.2f}")
 
