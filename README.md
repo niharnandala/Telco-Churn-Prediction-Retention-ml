@@ -1,5 +1,6 @@
 # 🚀 End-to-End Customer Churn Prediction & Retention Decision System
 
+
 <p align="center">
   <b>Built for real-world decision making — not just predictions</b>
 </p>
@@ -12,6 +13,11 @@
 </p>
 
 ---
+<p align="center">
+  <a href="https://end-to-end-customer-churn-prediction-retention-decision-system.streamlit.app/">
+    <img src="https://img.shields.io/badge/Live%20Demo-Streamlit%20App-ff4b4b?logo=streamlit&logoColor=white" />
+  </a>
+</p>
 
 ## 📌 Problem
 
