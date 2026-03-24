@@ -1,150 +1,169 @@
 # 🚀 End-to-End Customer Churn Prediction & Retention Decision System
 
-<p align="center">
-  <b>Built for real-world decision making — not just predictions</b>
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Python-3.10-blue?logo=python">
-  <img src="https://img.shields.io/badge/ML-ScikitLearn-orange">
-  <img src="https://img.shields.io/badge/Deployment-Streamlit-red">
-  <img src="https://img.shields.io/badge/Status-Production--Ready-success">
-</p>
+**Built by Nihar Nandala**
 
 ---
 
-## 📌 Problem
+## 🌐 Live Application
 
-Most churn models answer:
-
-> “Will this customer churn?”
-
-That’s useless in isolation.
-
-Businesses actually need:
-
-> **“Should we act on this customer?”**
+👉 https://end-to-end-customer-churn-prediction-retention-decision-system.streamlit.app/
 
 ---
 
-## 💡 Solution
+## 📌 What this project is
 
-This project turns churn prediction into a **decision system**.
+Most churn projects stop at prediction.  
+This one doesn’t.
 
-Instead of:
-```
+This system answers:
+
+> “Given this customer, should the business act or not?”
+
+It combines:
+- Machine learning  
+- Decision-making logic  
+- Business context  
+
+To create a practical, deployable system.
+
+---
+
+## ⭐ Why this project stands out
+
+- Not just a model → full pipeline + deployment  
+- Not just accuracy → decision + business trade-offs  
+- Not just code → clean product experience  
+
+Built like something usable by a business team.
+
+---
+
+## 🧠 Core Idea
+
+Instead of just predicting churn, the system:
+
+1. Predicts churn probability  
+2. Applies a configurable threshold  
+3. Assigns a decision-aware risk level  
+4. Suggests a next step  
+
+So instead of:
+
+```text
 Churn = 0.77
 ```
 
 You get:
+
+```text
+High Risk → prioritize for retention review
 ```
-High Risk → Target for retention campaign
-```
 
 ---
 
-## 🔥 Key Features
+## ⚙️ System Overview
 
-- ✅ End-to-end ML pipeline  
-- ✅ Threshold-based decision system  
-- ✅ Business impact simulation  
-- ✅ Real-time Streamlit app  
-- ✅ Interpretable model (Logistic Regression)  
-- ✅ Scenario analysis (pessimistic / expected / optimistic)  
-
----
-
-## 🧠 How It Works
-
-### Step 1 — Prediction
-- Model outputs churn probability  
-
-### Step 2 — Decision Logic
-- Apply configurable threshold  
-- Convert probability → risk category  
-
-### Step 3 — Action Layer
-- Suggest business action  
-- Estimate ROI impact  
+### Pipeline
+- Data cleaning & preprocessing  
+- Feature engineering  
+- Model training  
+- Evaluation & reporting  
+- Deployment via Streamlit  
 
 ---
 
-## ⚙️ Tech Stack
+### Models Used
 
-| Category        | Tools Used |
-|----------------|-----------|
-| Language       | Python |
-| ML             | Scikit-learn, XGBoost |
-| Data           | Pandas, NumPy |
-| Visualization  | Matplotlib, Seaborn |
-| Deployment     | Streamlit |
+| Model               | Role                  |
+|--------------------|-----------------------|
+| Logistic Regression | Final deployed model |
+| XGBoost            | Benchmark comparison |
 
 ---
 
-## 📊 Model Strategy
+### Why Logistic Regression is used in production
 
-| Model               | Purpose                |
-|--------------------|------------------------|
-| Logistic Regression | Final production model |
-| XGBoost            | Benchmark comparison   |
+Even though XGBoost was tested:
 
-### Why Logistic Regression?
-
-- More stable  
+- Logistic Regression performed competitively  
+- More stable predictions  
 - Fully interpretable  
-- Business-friendly explanations  
-- Comparable performance  
+- Easier to explain in a business setting  
 
-👉 Chosen deliberately, not by default.
+This decision was intentional.
 
 ---
 
-## 🎯 Decision System
+## 🎯 Decision System (Not Just Prediction)
 
-### 🔹 Threshold Optimization
+### Threshold-based logic
+- Not fixed at 0.5  
 - Multiple thresholds evaluated  
 - Trade-offs analyzed  
-- User-adjustable in app  
+- Adjustable in the app  
 
-### 🔹 Risk Segmentation
-- 🟢 Low Risk  
-- 🟡 Moderate Risk  
-- 🔴 High Risk  
+---
+
+### Risk segmentation (dynamic)
+
+- Low Risk  
+- Moderate Risk  
+- High Risk  
+
+Risk depends on the selected threshold.
 
 ---
 
 ## 💼 Business Layer
 
-This is where most projects fail — this one doesn’t.
+This system simulates:
 
-The system simulates:
+- Who would be targeted in a retention campaign  
+- Cost of targeting  
+- Expected retained value  
+- Net business impact  
 
-- 🎯 Who to target  
-- 💰 Cost of targeting  
-- 📈 Expected retention value  
-- 📊 Net business impact  
-
-### Scenario Analysis
-- Worst case  
+Includes scenario analysis:
+- Pessimistic  
 - Expected  
-- Best case  
+- Optimistic  
+
+This makes the model usable for decision-making.
 
 ---
 
-## 🖥️ Live App Features
+## 🖥️ Streamlit App
 
+### What you see
 - Customer input form  
-- Real-time predictions  
-- Threshold slider  
+- Real-time churn prediction  
+- Adjustable threshold slider  
 - Risk classification  
-- Suggested actions  
-- Feature importance insights  
+- Suggested next action  
+
+### What you can explore
+- Why the model predicted churn  
+- Feature contributions  
+- Threshold trade-offs  
+- Model comparison (hidden from main UI)
+
+---
+
+## 📸 Demo
+
+![App Screenshot](screenshots/Screenshot%20(86).png)
+
+---
+
+## 🎥 App Walkthrough
+
+[▶️ Watch Demo Video](App_videos/App%20Recording.webm)
 
 ---
 
 ## 📁 Project Structure
 
-```
+```text
 telco-churn-decision-system/
 ├── app/                  # Streamlit UI
 ├── src/                  # Core pipeline
@@ -155,63 +174,52 @@ telco-churn-decision-system/
 │   ├── evaluation.py
 │   ├── predict.py
 │   └── run_pipeline.py
-├── models/
-├── reports/
-├── data/
-├── data_processed/
+├── models/               # Saved model
+├── reports/              # Evaluation outputs
+├── data/                 # Raw dataset
+├── data_processed/       # Cleaned data
 ├── requirements.txt
 └── README.md
 ```
 
 ---
 
-## ⚡ Installation
+## ▶️ Running the Project
 
 ```bash
-git clone https://github.com/your-username/telco-churn-decision-system.git
-cd telco-churn-decision-system
 pip install -r requirements.txt
-```
-
----
-
-## ▶️ Run the Project
-
-```bash
 python -m src.run_pipeline
 streamlit run app/streamlit_app.py
 ```
 
 ---
 
-## 📸 Demo (Add Screenshot Here)
+## ⚠️ Important Design Decisions
 
-> Replace this with your actual app screenshot
-
-![App Screenshot](screenshots/Screenshot%20(86).png)
-
-----
-
-## 🧩 Key Design Decisions
-
-- ❌ No "Churn Reason" → prevents data leakage  
-- 🎯 Single model in UI → avoids confusion  
-- 🔁 No confidence score → replaced with decision logic  
+- Churn Reason NOT used → avoids data leakage  
+- Only one model shown in UI → avoids confusion  
+- Confidence removed → replaced with clearer risk logic  
 
 ---
 
-## 📌 What This Proves
+## 📌 What this project demonstrates
 
-- You can build **production-ready ML systems**  
-- You understand **business impact, not just models**  
-- You can design **decision-driven AI systems**  
+- End-to-end ML system design  
+- Clean modular code structure  
+- Model comparison and selection  
+- Threshold-based decision making  
+- Business-aware evaluation  
+- Deployment with usable UI  
 
 ---
 
-## 🧠 Final Thought
+## 🧠 Final Note
 
-> This is not about building the most complex model.  
-> It’s about building the **right system**.
+This project is not about building the most complex model.
+
+It is about building the right system:
+
+> One that connects predictions to decisions.
 
 ---
 
@@ -219,4 +227,4 @@ streamlit run app/streamlit_app.py
 
 **Nihar Nandala**
 
-> Building ML systems that connect predictions → decisions
+Focused on building practical ML systems that bridge the gap between models and real-world decisions.
