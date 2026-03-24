@@ -186,7 +186,6 @@ streamlit run app/streamlit_app.py
 
 ## 📸 Demo (Add Screenshot Here)
 
-> Replace this with your actual app screenshot
 
 ![App Screenshot](screenshots/Screenshot%20(86).png)
 
