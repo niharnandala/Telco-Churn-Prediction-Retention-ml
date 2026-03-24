@@ -1,196 +1,224 @@
-# Telco Customer Churn Prediction App
+# 🚀 End-to-End Customer Churn Prediction & Retention Decision System
 
-End-to-end machine learning project to predict customer churn and support retention decisions.
+<p align="center">
+  <b>Built for real-world decision making — not just predictions</b>
+</p>
 
-This project builds a complete pipeline from raw data to deployment, including model comparison, threshold optimization, and business-oriented retention strategy simulation.
-
----
-
-## Problem
-
-Customer churn directly impacts revenue in subscription-based businesses.
-
-The goal of this project is to:
-- identify customers likely to churn
-- prioritize retention efforts
-- balance prediction performance with business cost
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.10-blue?logo=python">
+  <img src="https://img.shields.io/badge/ML-ScikitLearn-orange">
+  <img src="https://img.shields.io/badge/Deployment-Streamlit-red">
+  <img src="https://img.shields.io/badge/Status-Production--Ready-success">
+</p>
 
 ---
 
-## Solution Overview
+## 📌 Problem
 
-The system predicts churn probability for each customer and classifies them into risk segments.
+Most churn models answer:
 
-It also simulates how different decision thresholds impact:
-- model performance
-- campaign cost
-- expected retained value
+> “Will this customer churn?”
 
----
+That’s useless in isolation.
 
-## Project Structure
+Businesses actually need:
 
-
-telco_churn_app/
-│
-├── app/ # Streamlit application
-├── artifacts/ # schema and default input configs
-├── data/ # raw dataset (Excel)
-├── data_processed/ # cleaned dataset
-├── models/ # trained models
-├── notebooks/ # analysis and experimentation
-├── reports/ # metrics, comparisons, simulations
-├── src/ # core pipeline code
-├── screenshots/ # app UI previews
-├── README.md
-└── requirements.txt
-
+> **“Should we act on this customer?”**
 
 ---
 
-## Pipeline
+## 💡 Solution
 
+This project turns churn prediction into a **decision system**.
 
-Raw Data
-↓
-Data Cleaning
-↓
-Feature Engineering
-↓
-Preprocessing (scaling + encoding)
-↓
-Model Training (Logistic + XGBoost)
-↓
-Evaluation + Threshold Analysis
-↓
-Retention Strategy Simulation
-↓
-Saved Model + Streamlit App
+Instead of:
+```
+Churn = 0.77
+```
 
+You get:
+```
+High Risk → Target for retention campaign
+```
 
 ---
 
-## Feature Engineering
+## 🔥 Key Features
 
-Key engineered features include:
-
-- `num_services` → number of active add-on services  
-- `Tenure_group` → customer lifecycle stage  
-- `AvgCharges` → normalized cost behavior  
-- `HighRisk_Combo` → month-to-month + high charges  
-- `ServiceIntensity` → normalized service usage  
-
----
-
-## Models
-
-Two models were trained and compared:
-
-- Logistic Regression  
-- XGBoost  
-
-Evaluation included:
-- Accuracy
-- Precision
-- Recall
-- F1-score
-- ROC-AUC
-
-The final deployed model is **Logistic Regression** due to:
-- competitive performance
-- interpretability
-- simpler deployment
+- ✅ End-to-end ML pipeline  
+- ✅ Threshold-based decision system  
+- ✅ Business impact simulation  
+- ✅ Real-time Streamlit app  
+- ✅ Interpretable model (Logistic Regression)  
+- ✅ Scenario analysis (pessimistic / expected / optimistic)  
 
 ---
 
-## Threshold Optimization
+## 🧠 How It Works
 
-Instead of using a fixed 0.5 threshold, multiple thresholds were evaluated.
+### Step 1 — Prediction
+- Model outputs churn probability  
 
-Metrics were compared across:
-- 0.30, 0.40, 0.50, 0.60, 0.70
+### Step 2 — Decision Logic
+- Apply configurable threshold  
+- Convert probability → risk category  
 
-The selected threshold balances:
-- recall of churn customers
-- unnecessary targeting cost
-
----
-
-## Business Simulation
-
-A retention strategy was simulated to evaluate real-world impact.
-
-Assumptions:
-- cost per targeted customer = 500  
-- retained customer value = 5000  
-- retention success rate = 35%  
-
-Outputs include:
-- number of customers targeted
-- campaign cost
-- expected retained value
-- net business impact
+### Step 3 — Action Layer
+- Suggest business action  
+- Estimate ROI impact  
 
 ---
 
-## Streamlit App
+## ⚙️ Tech Stack
 
-The app allows real-time prediction for a single customer.
-
-### Outputs:
-- churn probability  
-- predicted label  
-- risk segment (Low / Medium / High)  
-- recommended action  
-
-An additional section provides model details for transparency.
+| Category        | Tools Used |
+|----------------|-----------|
+| Language       | Python |
+| ML             | Scikit-learn, XGBoost |
+| Data           | Pandas, NumPy |
+| Visualization  | Matplotlib, Seaborn |
+| Deployment     | Streamlit |
 
 ---
 
-## How to Run
+## 📊 Model Strategy
 
-### 1. Install dependencies
+| Model               | Purpose                |
+|--------------------|------------------------|
+| Logistic Regression | Final production model |
+| XGBoost            | Benchmark comparison   |
 
+### Why Logistic Regression?
+
+- More stable  
+- Fully interpretable  
+- Business-friendly explanations  
+- Comparable performance  
+
+👉 Chosen deliberately, not by default.
+
+---
+
+## 🎯 Decision System
+
+### 🔹 Threshold Optimization
+- Multiple thresholds evaluated  
+- Trade-offs analyzed  
+- User-adjustable in app  
+
+### 🔹 Risk Segmentation
+- 🟢 Low Risk  
+- 🟡 Moderate Risk  
+- 🔴 High Risk  
+
+---
+
+## 💼 Business Layer
+
+This is where most projects fail — this one doesn’t.
+
+The system simulates:
+
+- 🎯 Who to target  
+- 💰 Cost of targeting  
+- 📈 Expected retention value  
+- 📊 Net business impact  
+
+### Scenario Analysis
+- Worst case  
+- Expected  
+- Best case  
+
+---
+
+## 🖥️ Live App Features
+
+- Customer input form  
+- Real-time predictions  
+- Threshold slider  
+- Risk classification  
+- Suggested actions  
+- Feature importance insights  
+
+---
+
+## 📁 Project Structure
+
+```
+telco-churn-decision-system/
+├── app/                  # Streamlit UI
+├── src/                  # Core pipeline
+│   ├── cleaning.py
+│   ├── preprocessing.py
+│   ├── features.py
+│   ├── models.py
+│   ├── evaluation.py
+│   ├── predict.py
+│   └── run_pipeline.py
+├── models/
+├── reports/
+├── data/
+├── data_processed/
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## ⚡ Installation
+
+```bash
+git clone https://github.com/your-username/telco-churn-decision-system.git
+cd telco-churn-decision-system
 pip install -r requirements.txt
+```
 
+---
 
-### 2. Run pipeline
+## ▶️ Run the Project
 
+```bash
 python -m src.run_pipeline
-
-
-### 3. Launch app
-
 streamlit run app/streamlit_app.py
-
-
----
-
-## Example Use Case
-
-- Identify high-risk customers  
-- Target them with retention offers  
-- Reduce churn-related revenue loss  
+```
 
 ---
 
-## Key Takeaways
+## 📸 Demo (Add Screenshot Here)
 
-- Proper preprocessing and feature engineering significantly improve model performance  
-- Threshold selection should be aligned with business goals, not just metrics  
-- Prediction alone is not enough — it must connect to action  
+> Replace this with your actual app screenshot
 
----
-
-## Future Improvements
-
-- add uplift modeling for targeted interventions  
-- include customer segmentation strategies  
-- integrate API-based deployment  
-- refine business assumptions using real cost data  
+```
+![App Screenshot](assets/demo.png)
+```
 
 ---
 
-## Author
+## 🧩 Key Design Decisions
 
-This project demonstrates a structured approach to building and deploying a machine learnin
+- ❌ No "Churn Reason" → prevents data leakage  
+- 🎯 Single model in UI → avoids confusion  
+- 🔁 No confidence score → replaced with decision logic  
+
+---
+
+## 📌 What This Proves
+
+- You can build **production-ready ML systems**  
+- You understand **business impact, not just models**  
+- You can design **decision-driven AI systems**  
+
+---
+
+## 🧠 Final Thought
+
+> This is not about building the most complex model.  
+> It’s about building the **right system**.
+
+---
+
+## 👤 Author
+
+**Nihar Nandala**
+
+> Building ML systems that connect predictions → decisions
