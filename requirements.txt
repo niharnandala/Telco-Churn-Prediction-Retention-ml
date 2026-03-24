@@ -1,7 +1,9 @@
+streamlit==1.46.1
 pandas
 numpy
 scikit-learn
 xgboost
-streamlit
 joblib
 pyarrow
+altair<6
+openpyxl
