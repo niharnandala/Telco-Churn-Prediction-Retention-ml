@@ -1,0 +1,27 @@
+{
+    "final_model": "logistic_regression",
+    "logistic_regression": {
+        "threshold": 0.6,
+        "accuracy": 0.7757,
+        "precision": 0.5604,
+        "recall": 0.7193,
+        "f1_score": 0.63,
+        "roc_auc": 0.8487,
+        "true_negatives": 824,
+        "false_positives": 211,
+        "false_negatives": 105,
+        "true_positives": 269
+    },
+    "xgboost": {
+        "threshold": 0.6,
+        "accuracy": 0.807,
+        "precision": 0.7429,
+        "recall": 0.4171,
+        "f1_score": 0.5342,
+        "roc_auc": 0.8563,
+        "true_negatives": 981,
+        "false_positives": 54,
+        "false_negatives": 218,
+        "true_positives": 156
+    }
+}

@@ -1,0 +1,86 @@
+{
+  "Gender": {
+    "type": "categorical",
+    "values": ["Male", "Female"]
+  },
+  "Senior Citizen": {
+    "type": "numeric",
+    "values": [0, 1]
+  },
+  "Partner": {
+    "type": "categorical",
+    "values": ["Yes", "No"]
+  },
+  "Dependents": {
+    "type": "categorical",
+    "values": ["Yes", "No"]
+  },
+  "Tenure Months": {
+    "type": "numeric",
+    "min": 0,
+    "max": 100
+  },
+  "Phone Service": {
+    "type": "categorical",
+    "values": ["Yes", "No"]
+  },
+  "Multiple Lines": {
+    "type": "categorical",
+    "values": ["Yes", "No", "No phone service"]
+  },
+  "Internet Service": {
+    "type": "categorical",
+    "values": ["DSL", "Fiber optic", "No"]
+  },
+  "Online Security": {
+    "type": "categorical",
+    "values": ["Yes", "No", "No internet service"]
+  },
+  "Online Backup": {
+    "type": "categorical",
+    "values": ["Yes", "No", "No internet service"]
+  },
+  "Device Protection": {
+    "type": "categorical",
+    "values": ["Yes", "No", "No internet service"]
+  },
+  "Tech Support": {
+    "type": "categorical",
+    "values": ["Yes", "No", "No internet service"]
+  },
+  "Streaming TV": {
+    "type": "categorical",
+    "values": ["Yes", "No", "No internet service"]
+  },
+  "Streaming Movies": {
+    "type": "categorical",
+    "values": ["Yes", "No", "No internet service"]
+  },
+  "Contract": {
+    "type": "categorical",
+    "values": ["Month-to-month", "One year", "Two year"]
+  },
+  "Paperless Billing": {
+    "type": "categorical",
+    "values": ["Yes", "No"]
+  },
+  "Payment Method": {
+    "type": "categorical",
+    "values": [
+      "Electronic check",
+      "Mailed check",
+      "Bank transfer (automatic)",
+      "Credit card (automatic)"
+    ]
+  },
+  "Monthly Charges": {
+    "type": "numeric",
+    "min": 0,
+    "max": 1000
+  },
+  "Total Charges": {
+    "type": "numeric",
+    "min": 0,
+    "max": 100000
+  }
+}
